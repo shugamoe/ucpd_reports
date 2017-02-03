@@ -83,8 +83,12 @@ def scrape_cur_page(filename, table):
     for incident in incidents:
         row = []
         for info in incident.findAll('td'):
-            row.append((info.text).strip())
-        csv_rows.append(row)
+        	if info.text in ['VOID']:
+        		break
+        	else:
+        		row.append((info.text).strip())
+        if len(row) > 0:
+        	csv_rows.append(row)
 
     with open(filename, 'a') as f:
         writer = csv.writer(f)
